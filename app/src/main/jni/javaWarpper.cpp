@@ -1,6 +1,17 @@
 #include <jni.h>
 #include <string>
+#include <iostream>
 #include "include/Pipeline.h"
+#include <time.h>
+#include <android/log.h>
+
+const char *JNI_TAG = "spd_car";
+#define LOGI(fmt, args...) __android_log_print(ANDROID_LOG_INFO,  JNI_TAG, fmt, ##args)
+//#define //LOGD(fmt, args...) __android_log_print(ANDROID_LOG_DEBUG, JNI_TAG, fmt, ##args)
+#define LOGD(fmt, args...)
+#define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, JNI_TAG, fmt, ##args)
+#define LOGW(fmt, args...) __android_log_print(ANDROID_LOG_WARN,  JNI_TAG, fmt, ##args)
+#define LOGF(fmt, args...) __android_log_print(ANDROID_LOG_FATAL, JNI_TAG, fmt, ##args)
 
 
 std::string jstring2str(JNIEnv *env, jstring jstr) {
@@ -59,6 +70,10 @@ JNIEXPORT jstring JNICALL
 Java_com_pcl_lpr_utils_PlateRecognition_SimpleRecognization(
         JNIEnv *env, jobject obj,
         jlong matPtr, jlong object_pr) {
+    clock_t start, finish;
+    double totaltime;
+    start = clock();
+
     pr::PipelinePR *PR = (pr::PipelinePR *) object_pr;
     cv::Mat &mRgb = *(cv::Mat *) matPtr;
     cv::Mat rgb;
@@ -70,18 +85,27 @@ Java_com_pcl_lpr_utils_PlateRecognition_SimpleRecognization(
                                                                     pr::SEGMENTATION_FREE_METHOD);
         std::string concat_results;
         for (auto one:list_res) {
-            if (one.confidence > 0.7)
+            if (one.confidence > 0.8)
                 concat_results += one.getPlateName() + ",";
         }
         concat_results = concat_results.substr(0, concat_results.size() - 1);
-        return env->NewStringUTF(concat_results.c_str());
+
+        finish = clock();
+        totaltime = (double) (finish - start) / CLOCKS_PER_SEC;
+
+        jstring pJstring = env->NewStringUTF(concat_results.c_str());
+        if (concat_results.size() > 0) {
+            const char *str = env->GetStringUTFChars( pJstring, 0);
+            LOGI("\nspend time：%f,car num:%s", totaltime, str);
+        }
+        return pJstring;
     } catch (std::exception e) {
         return env->NewStringUTF("");
     }
 }
 JNIEXPORT void JNICALL
 Java_com_pcl_lpr_utils_PlateRecognition_ReleasePlateRecognizer(JNIEnv *env, jobject obj,
-                                                                  jlong object_re) {
+                                                               jlong object_re) {
     pr::PipelinePR *PR = (pr::PipelinePR *) object_re;
     delete PR;
 }

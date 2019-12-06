@@ -70,11 +70,10 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
         surfaceHolder = mSurfaceView.getHolder();
         surfaceHolder.addCallback(this);
         int version = android.os.Build.VERSION.SDK_INT;
-        if (version > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            //SD55上需要旋转270
+        String model = Build.MODEL;
+        if (model.contains("SD55")) {
             degrees = 270;
         } else {
-            // KT55 上旋转90
             degrees = 90;
         }
     }
@@ -90,7 +89,7 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
     public void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mLoaderCallback);
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
         } else {
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
@@ -190,7 +189,8 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
                 Mat m = new Mat(width, height, CvType.CV_8UC4);
                 //                    Mat m = new Mat(width, height, CvType.CV_8UC2);
                 Utils.bitmapToMat(bitmap, m);
-                return PlateRecognition.SimpleRecognization(m.getNativeObjAddr(), handle);
+                String result = PlateRecognition.SimpleRecognization(m.getNativeObjAddr(), handle);
+                return result;
 
             } catch (Exception ex) {
                 Log.e("Sys", "Error:" + ex.getMessage() + "1111");
