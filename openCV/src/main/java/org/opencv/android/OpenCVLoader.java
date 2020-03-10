@@ -98,9 +98,14 @@ public class OpenCVLoader
     public static final String OPENCV_VERSION_4_1_2 = "4.1.2";
 
     /**
+     * OpenCV Library version 4.1.2.
+     */
+    public static final String OPENCV_VERSION_4_2_0 = "4.2.0";
+
+    /**
      * Current OpenCV Library version
      */
-    public static final String OPENCV_VERSION = OPENCV_VERSION_4_1_2;
+    public static final String OPENCV_VERSION = OPENCV_VERSION_4_2_0;
 
 
     /**

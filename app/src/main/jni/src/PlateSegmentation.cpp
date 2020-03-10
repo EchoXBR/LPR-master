@@ -211,12 +211,12 @@ namespace pr{
         avgfilter(false_prob,cols,5);
 //        avgfilter(ch_prob,cols,5);
         std::vector<int> candidate_pts(7);
-#ifdef DEBUG
+//#ifdef DEBUG
         drawHist(engNum_prob,cols,"engNum_prob");
         drawHist(false_prob,cols,"false_prob");
         drawHist(ch_prob,cols,"ch_prob");
                 cv::waitKey(0);
-#endif
+//#endif
 
 
 
@@ -249,8 +249,8 @@ namespace pr{
                     if(cp7_p5>=cols)
                         continue;
 //                    float loss = ch_prob[cp1_ch]+
-//                       engNum_prob[cp2_p0] +engNum_prob[cp3_p1]+engNum_prob[cp4_p2]+engNum_prob[cp5_p3]+engNum_prob[cp6_p4] +engNum_prob[cp7_p5]
-//                    + (false_prob[md2]+false_prob[md3]+false_prob[md4]+false_prob[md5]+false_prob[md5] + false_prob[md6]);
+                       engNum_prob[cp2_p0] +engNum_prob[cp3_p1]+engNum_prob[cp4_p2]+engNum_prob[cp5_p3]+engNum_prob[cp6_p4] +engNum_prob[cp7_p5]
+                    + (false_prob[md2]+false_prob[md3]+false_prob[md4]+false_prob[md5]+false_prob[md5] + false_prob[md6]);
                     float loss = ch_prob[cp1_ch]*3 -(false_prob[cp3_p1]+false_prob[cp4_p2]+false_prob[cp5_p3]+false_prob[cp6_p4]+false_prob[cp7_p5]);
 
                     if(loss>loss_selected)

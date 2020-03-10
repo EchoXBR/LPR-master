@@ -71,11 +71,11 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
         surfaceHolder.addCallback(this);
         int version = android.os.Build.VERSION.SDK_INT;
         String model = Build.MODEL;
-        if (model.contains("SD55")) {
-            degrees = 270;
-        } else {
+//        if (model.contains("SD55")&&version>Build.VERSION_CODES.O) {
+//            degrees = 270;
+//        } else {
             degrees = 90;
-        }
+//        }
     }
 
     private void finishValue(String card) {
@@ -221,5 +221,10 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

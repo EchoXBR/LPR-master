@@ -85,7 +85,7 @@ Java_com_pcl_lpr_utils_PlateRecognition_SimpleRecognization(
                                                                     pr::SEGMENTATION_FREE_METHOD);
         std::string concat_results;
         for (auto one:list_res) {
-            if (one.confidence > 0.8)
+            if (one.confidence > 0.7)
                 concat_results += one.getPlateName() + ",";
         }
         concat_results = concat_results.substr(0, concat_results.size() - 1);
