@@ -96,7 +96,7 @@ public class DeepAssetUtil {
         String segmentation_free_caffemodel = SDCARD_DIR + File.separator + FREE_INCEPTION_CAFFEMODEL;
         copyFilesFromAssets(context);
         //调用JNI 加载资源函数
-        return PlateRecognition.InitPlateRecognizer(
+        return pr.platerecognization.PlateRecognition.InitPlateRecognizer(
                 cascade_filename,
                 finemapping_prototxt, finemapping_caffemodel,
                 segmentation_prototxt, segmentation_caffemodel,

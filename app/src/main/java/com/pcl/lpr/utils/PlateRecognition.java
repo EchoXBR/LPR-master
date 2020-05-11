@@ -9,12 +9,12 @@ public class PlateRecognition {
     static {
         System.loadLibrary("lpr");
     }
-
     static native long InitPlateRecognizer(String casacde_detection,
-                                           String finemapping_prototxt, String finemapping_caffemodel,
-                                           String segmentation_prototxt, String segmentation_caffemodel,
-                                           String charRecognization_proto, String charRecognization_caffemodel,
-                                           String segmentation_free_prototxt, String segmentation_free_caffemodel);
+                                           String finemapping_prototxt,String finemapping_caffemodel,
+                                           String segmentation_prototxt,String segmentation_caffemodel,
+                                           String charRecognization_proto,String charRecognization_caffemodel,
+                                           String segmentationfree_proto, String segmentationfree_caffemodel);
+
 
     static native void ReleasePlateRecognizer(long object);
 

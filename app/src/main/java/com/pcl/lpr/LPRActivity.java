@@ -183,13 +183,12 @@ public class LPRActivity extends AppCompatActivity implements SurfaceHolder.Call
                 Bitmap bitmap = Bitmap.createBitmap(bmp, 0, 0,
                         bmp.getWidth(), bmp.getHeight(), matrix, true);
 
-
                 int width = bitmap.getWidth();
                 int height = bitmap.getHeight();
                 Mat m = new Mat(width, height, CvType.CV_8UC4);
                 //                    Mat m = new Mat(width, height, CvType.CV_8UC2);
                 Utils.bitmapToMat(bitmap, m);
-                String result = PlateRecognition.SimpleRecognization(m.getNativeObjAddr(), handle);
+                String result = pr.platerecognization.PlateRecognition.SimpleRecognization(m.getNativeObjAddr(), handle);
                 return result;
 
             } catch (Exception ex) {
